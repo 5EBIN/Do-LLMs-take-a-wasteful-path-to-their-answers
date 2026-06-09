@@ -14,9 +14,10 @@ the finding — and a smaller positive finding survived (below).
 ## TL;DR findings
 
 - **M1 — Entropy by depth:** the answer's logit-lens entropy stays high through
-  early/middle layers and collapses only in the **final ~20%** of depth. Little
-  redundant middle to skip → early-exit has little to work with. (Replicates at
-  both model sizes; base ≈ instruct.)
+  early/middle layers and collapses only in the **final ~20%** of depth. The
+  trajectory is **non-monotonic** (it zigzags), and there's little redundant
+  middle to skip → early-exit has little to work with. (Replicates at both model
+  sizes; base ≈ instruct.)
 - **M2 — Detour factor:** the angular (direction-only) path is **~9× longer**
   than the straight-line distance. Heavy directional wandering exists.
 - **M3 — Consistency by task type:** wandering is **task-structured** —
@@ -57,6 +58,14 @@ unembedding) and measures next-token entropy. M2–M4 work on the residual-strea
 straight-line distance (raw and unit-normalized "angular"); M3/M4 measure the
 mean pairwise cosine of layer-to-layer *step directions* across prompts.
 
+## Why no training experiment
+A natural next step is training the model to take straighter (more monotonic)
+trajectories so it could exit early. I didn't pursue it: the observations (M1's
+non-monotonic path, M3/M4's content-necessary wandering) predict that forcing the
+path straight would cost accuracy on content-heavy queries. That's a prediction
+from these measurements, not a tested result — confirming or refuting it would
+need the training run, which this study does not include.
+
 ## Honest limitations
 Small models (≤1.5B). The **logit lens is biased in middle layers** — some M1/M3
 wiggle is the probe, not the model; a tuned lens would harden this. Few facts in
@@ -64,8 +73,9 @@ M4; last-token representations are sensitive to phrasing **length**. And even
 genuine route-divergence wouldn't prove routes can be *forced together* without
 hurting accuracy — that needs a training experiment, not done here.
 
-## Related work 
-Spectral Journey (2025); "Diminishing Returns of Early-Exit" (2026); LEAP (2026,
-forces convergence — opposite philosophy); Mixture-of-Depths (2024); logit lens /
-tuned lens.
-
+## Related work
+Spectral Journey (2025, transformers learn a spectral shortest-path heuristic);
+"Diminishing Returns of Early-Exit" (2026); Mixture-of-Depths (2024); logit lens
+/ tuned lens. Early-exit via learned/forced layer convergence is an active 2026
+area; this study is observational and in a different (generative, non-distilled)
+regime, so it neither builds on nor tests those methods.
