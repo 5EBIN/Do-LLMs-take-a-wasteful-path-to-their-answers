@@ -64,7 +64,7 @@ M4; last-token representations are sensitive to phrasing **length**. And even
 genuine route-divergence wouldn't prove routes can be *forced together* without
 hurting accuracy — that needs a training experiment, not done here.
 
-## Related work (verify before citing)
+## Related work 
 Spectral Journey (2025); "Diminishing Returns of Early-Exit" (2026); LEAP (2026,
 forces convergence — opposite philosophy); Mixture-of-Depths (2024); logit lens /
 tuned lens.
