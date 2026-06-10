@@ -29,10 +29,29 @@ the finding — and a smaller positive finding survived (below).
   facts (overall ~0.59 vs 0.29 baseline). → the earlier erratic-ness was sensible
   *content routing*, **not** dithering. Efficiency idea falsified.
 
-**What survived:** *representational paths to factual answers are
-phrasing-invariant in their destination and content-determined in their route,
-converging to a shared commit direction only in the final layers; stable from
-0.5B to 1.5B.*
+## Control (dead-salmon check)
+ 
+All trajectory measurements were repeated on a **randomly-initialized twin** of
+the model (same architecture, untrained weights), following the established
+practice of using random-init null models to separate learned structure from
+architectural geometry (cf. *"Automated Interpretability Metrics Do Not
+Distinguish Trained and Random Transformers"*, 2026; *"Lost in the Middle at
+Birth"*, 2026).
+ 
+- **Detour magnitude is mostly architectural.** It largely persists on the
+  random model (**9.07** trained vs **7.11** random) — so the raw "it wanders"
+  effect comes mostly from high-dimensional geometry, not from learning.
+- **Task-structured routing is learned.** Arithmetic step-consistency collapses
+  from **0.65** (trained) to **0.01** (random) — training creates it; the
+  architecture alone produces essentially none.
+- **The factual effect is mostly architectural.** Factual consistency is **0.27**
+  trained vs **0.20** random, so only a small part is learned — flagged honestly
+  rather than overclaimed.
+- **Verdict:** the interesting finding — *arithmetic routing is created by
+  training* — survives the control and is not a geometric artifact; the weak
+  factual effect is not.
+
+**What survived:** *representational routing is task-structured in a way created by training — strongly for procedural tasks (arithmetic: 0.65 trained vs 0.01 random-init), weakly for factual recall (mostly architectural). Replicates 0.5B→1.5B.*
 
 ---
 
